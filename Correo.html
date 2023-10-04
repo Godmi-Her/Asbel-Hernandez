@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <link rel="stylesheet" href="css/omaga.css">
+</head>
+<body>
+    
+    <div class="cuadro">
+        <h1>Contacto</h1>
+        <form action="mailto:asbelroberto@mail.com" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Enviar</button>
+            
+                <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+    $telefono = $_POST["telefono"];
+    $correo = $_POST["correo"];
+    $mensaje = $_POST["mensaje"];
+
+    $destinatario = "asbelroberto@gmail.com"; // Cambia esto por tu dirección de correo electrónico
+
+    $asunto = "Nuevo mensaje de contacto de $nombre";
+    $cuerpo = "Nombre: $nombre\n";
+    $cuerpo .= "Teléfono: $telefono\n";
+    $cuerpo .= "Correo Electrónico: $correo\n";
+    $cuerpo .= "Mensaje:\n$mensaje";
+
+    mail($destinatario, $asunto, $cuerpo);
+
+    // Redirige al usuario a una página de confirmación
+    header("Location: https://mail.google.com/mail/u/0/#inbox?compose=new"); // Cambia esto por la página de confirmación que desees
+    exit();
+}
+?>
+            </div>
+        </form>
+    </div>
+    
+
+</body>
+</html>
